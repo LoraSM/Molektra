@@ -1,0 +1,110 @@
+name: Build Molektra
+
+on:
+  workflow_dispatch:        
+  push:
+    tags:
+      - 'v*'            
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false     
+      matrix:
+        include:
+          - os: ubuntu-22.04
+            name: Linux
+            sep: ':'
+
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash -el {0}
+        
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          python-version: '3.9'
+          auto-activate-base: false
+          activate-environment: molecule_viewer_env
+
+      - name: Install system libraries (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libopenblas-dev liblapack-dev \
+            libgl1 libegl1 libxkbcommon-x11-0 \
+            libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 \
+            libxcb-render-util0 libxcb-xinerama0 libxcb-shape0
+
+      - name: Install conda build tools
+        run: conda install -y gfortran pkg-config openblas
+
+      - name: Install Python dependencies
+        run: |
+          pip install "setuptools<60" wheel
+          pip install meson ninja
+          which meson
+          python -c "import mesonbuild; print('mesonbuild OK')"
+          pip install numpy==1.26.4
+          pip install \
+            PyQt5==5.15.11 \
+            pyqtgraph==0.12.4 \
+            PyOpenGL==3.1.10 \
+            matplotlib==3.7.0 \
+            scipy==1.10.1 \
+            PyYAML==6.0.1 \
+            posym==1.3.0 \
+            ase==3.22.1
+          pip install pyinstaller
+
+      - name: Install symgroupy from Github
+        run: |
+          TMPDIR=$(mktemp -d)
+          curl -L https://github.com/abelcarreras/symgroup/archive/refs/heads/master.zip -o "$TMPDIR/symgroupy.zip"
+          unzip -q "$TMPDIR/symgroupy.zip" -d "$TMPDIR"
+          touch "$TMPDIR/symgroup-master/python/readme.md"
+          pip install --no-build-isolation "$TMPDIR/symgroup-master/python"
+
+      - name: Install wfnsympy from GitHub
+        run: |
+          TMPDIR=$(mktemp -d)
+          curl -L https://github.com/abelcarreras/WFNSYM/archive/refs/heads/master.zip -o "$TMPDIR/wfnsympy.zip"
+          unzip -q "$TMPDIR/wfnsympy.zip" -d "$TMPDIR"
+          pip install --no-build-isolation "$TMPDIR/WFNSYM-master/python"
+
+      - name: Install cosymlib
+        run: | 
+          pip install pointgroup==0.4.1 
+          pip install --no-build-isolation huckelpy==0.2.3
+          pip install cosymlib==0.11.1 --no-deps
+
+
+      - name: Build with PyInstaller
+        run: |
+          pyinstaller --onedir --windowed \
+            --paths=. \
+            --collect-submodules gui \
+            --collect-submodules molecule \
+            --collect-submodules utils \
+            --collect-submodules ase --collect-data ase \
+            --collect-submodules cosymlib --collect-data cosymlib \
+            --collect-submodules posym --collect-data posym \
+            --collect-submodules OpenGL \
+            --add-data "gui${{ matrix.sep }}gui" \
+            main.py
+
+      - name: Package
+        run: |
+          cd dist
+          if [ "${} runner.os }}" == "macOS" ]; then
+            zip -r ../Molektra-${{ matrix.name }}.zip main.app
+          else
+            zip -r ../Molektra-${{ matrix.name }}.zip main
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Molektra-${{ matrix.name }}
+          path: Molektra-${{ matrix.name }}.zip
