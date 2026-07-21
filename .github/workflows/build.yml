@@ -83,7 +83,8 @@ jobs:
 
       - name: Install cosymlib
         run: | 
-          pip install pointgroup==0.4.1 huckelpy==0.2.3
+          pip install pointgroup==0.4.1 
+          pip install --no-build-isolation huckelpy==0.2.3
           pip install cosymlib==0.11.1 --no-deps
 
 
