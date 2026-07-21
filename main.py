@@ -3,12 +3,19 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-
 import sys
+from PyQt5.QtGui import QSurfaceFormat
 from PyQt5.QtWidgets import QApplication
 from gui.main_window import MainWindow
 
 def main():
+    fmt = QSurfaceFormat()
+    fmt.setVersion(2,1)
+    fmt.setProfile(QSurfaceFormat.NoProfile)
+    fmt.setSwapBehavior(QSurfaceFormat.DoubleBuffer)
+    fmt.setDepthBufferSize(24)
+    fmt.setStencilBufferSize(8)
+    QSurfaceFormat.setDefaultFormat(fmt)
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
@@ -16,4 +23,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
