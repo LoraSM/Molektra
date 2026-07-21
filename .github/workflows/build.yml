@@ -51,6 +51,8 @@ jobs:
         run: |
           pip install "setuptools<60" wheel
           pip install meson ninja
+          which meson
+          python -c "import mesonbuild; print('mesonbuild OK')"
           pip install numpy==1.26.4
           pip install \
             PyQt5==5.15.11 \
@@ -69,14 +71,14 @@ jobs:
           curl -L https://github.com/abelcarreras/symgroup/archive/refs/heads/master.zip -o "$TMPDIR/symgroupy.zip"
           unzip -q "$TMPDIR/symgroupy.zip" -d "$TMPDIR"
           touch "$TMPDIR/symgroup-master/python/readme.md"
-          pip install "$TMPDIR/symgroup-master/python"
+          pip install --no-build-isolation "$TMPDIR/symgroup-master/python"
 
       - name: Install wfnsympy from GitHub
         run: |
           TMPDIR=$(mktemp -d)
           curl -L https://github.com/abelcarreras/WFNSYM/archive/refs/heads/master.zip -o "$TMPDIR/wfnsympy.zip"
           unzip -q "$TMPDIR/wfnsympy.zip" -d "$TMPDIR"
-          pip install "$TMPDIR/WFNSYM-master/python"
+          pip install --no-build-isolation "$TMPDIR/WFNSYM-master/python"
 
       - name: Install cosymlib
         run: | 
