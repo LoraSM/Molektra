@@ -93,6 +93,13 @@ jobs:
             --collect-submodules cosymlib --collect-data cosymlib \
             --collect-submodules posym --collect-data posym \
             --collect-submodules OpenGL \
+            --hidden-import OpenGL.platform.egl \
+            --hidden-import OpenGL.platform.glx \
+            --hidden-import OpenGL.arrays.ctypesarrays \
+            --hidden-import OpenGL.arrays.numpymodule \
+            --hidden-import OpenGL.arrays.lists \
+            --hidden-import OpenGL.arrays.numbers \
+            --hidden-import OpenGL.arrays.strings \
             --add-data "gui${{ matrix.sep }}gui" \
             main.py
 
