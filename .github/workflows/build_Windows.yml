@@ -29,6 +29,8 @@ jobs:
           python-version: '3.9'
           auto-activate-base: false
           activate-environment: molecule_viewer_env
+          channels: conda-forge, defaults
+          conda-remove-defaults: true
 
       - name: Install system libraries (Linux)
         if: runner.os == 'Linux'
@@ -40,7 +42,7 @@ jobs:
             libxcb-render-util0 libxcb-xinerama0 libxcb-shape0
 
       - name: Install conda build tools
-        run: conda install -y gfortran pkg-config openblas
+        run: conda install -y m2w64-toolchain libopenblas pkg-config
 
       - name: Install Python dependencies
         run: |
