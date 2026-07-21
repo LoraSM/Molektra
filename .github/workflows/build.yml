@@ -89,7 +89,6 @@ jobs:
 
 
       - name: Build with PyInstaller
-        shell: bash
         run: |
           pyinstaller --onedir --windowed \
             --paths=. \
@@ -103,7 +102,6 @@ jobs:
             main.py
 
       - name: Package
-        shell: bash
         run: |
           cd dist
             zip -r ../Molektra-${{ matrix.name }}.zip main
