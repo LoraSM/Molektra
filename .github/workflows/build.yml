@@ -45,11 +45,12 @@ jobs:
             libxcb-render-util0 libxcb-xinerama0 libxcb-shape0
 
       - name: Install conda build tools
-        run: conda install -y gfortran meson ninja pkg-config
+        run: conda install -y gfortran pkg-config
 
       - name: Install Python dependencies
         run: |
           pip install "setuptools<60" wheel
+          pip install meson ninja
           pip install numpy==1.26.4
           pip install \
             PyQt5==5.15.11 \
