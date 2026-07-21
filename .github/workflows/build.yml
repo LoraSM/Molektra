@@ -12,24 +12,29 @@ jobs:
       fail-fast: false     
       matrix:
         include:
-          - os: macos-13
-            name: macOS
-            sep: ':'
+      #    - os: macos-13
+      #      name: macOS
+      #      sep: ':'
           - os: ubuntu-22.04
             name: Linux
             sep: ':'
-          - os: windows-latest
-            name: Windows
-            sep: ';'
+      #    - os: windows-latest
+      #      name: Windows
+      #      sep: ';'
 
     runs-on: ${{ matrix.os }}
-
+    defaults:
+      run:
+        shell: bash -el {0}
+        
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - uses: conda-incubator/setup-miniconda@v3
         with:
-          python-version: '3.11'
+          python-version: '3.9'
+          auto-activate-base: false
+          activate-environment: molecule_viewer_env
 
       - name: Install system libraries (Linux)
         if: runner.os == 'Linux'
@@ -38,6 +43,9 @@ jobs:
           sudo apt-get install -y libgl1 libegl1 libxkbcommon-x11-0 \
             libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 \
             libxcb-render-util0 libxcb-xinerama0 libxcb-shape0
+
+      - name: Install conda build tools
+        run: conda install -y gfortran meson ninja pkg-config
 
       - name: Install Python dependencies
         run: |
@@ -54,14 +62,26 @@ jobs:
             ase==3.22.1
           pip install pyinstaller
 
+      - name: Install symgroupy from Github
+        run: |
+          TMPDIR=$(mktemp -d)
+          curl -L https://github.com/abelcarreras/symgroup/archive/refs/heads/master.zip -o "$TMPDIR/symgroupy.zip"
+          unzip -q "$TMPDIR/symgroupy.zip" -d "$TMPDIR"
+          touch "$TMPDIR/symgroup-master/python/readme.md"
+          pip install "$TMPDIR/symgroup-master/python"
+
+      - name: Install wfnsympy from GitHub
+        run: |
+          TMPDIR=$(mktemp -d)
+          curl -L https://github.com/abelcarreras/WFNSYM/archive/refs/heads/master.zip -o "$TMPDIR/wfnsympy.zip"
+          unzip -q "$TMPDIR/wfnsympy.zip" -d "$TMPDIR"
+          pip install "$TMPDIR/WFNSYM-master/python"
+
       - name: Install cosymlib
         run: | 
           pip install pointgroup==0.4.1 huckelpy==0.2.3
           pip install cosymlib==0.11.1 --no-deps
 
-      - name: Install conda dependencies
-        run: |
-          conda install -y gfortran meson ninja pkg-config
 
       - name: Build with PyInstaller
         shell: bash
@@ -81,13 +101,7 @@ jobs:
         shell: bash
         run: |
           cd dist
-          if [ "${{ runner.os }}" == "macOS" ]; then
-            zip -r ../Molektra-${{ matrix.name }}.zip main.app
-          elif [ "${{ runner.os }}" == "Windows" ]; then
-            7z a ../Molektra-${{ matrix.name }}.zip main
-          else
             zip -r ../Molektra-${{ matrix.name }}.zip main
-          fi
 
       - uses: actions/upload-artifact@v4
         with:
