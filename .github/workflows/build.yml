@@ -12,12 +12,12 @@ jobs:
       fail-fast: false     
       matrix:
         include:
-      #    - os: macos-13
-      #      name: macOS
-      #      sep: ':'
-          - os: ubuntu-22.04
-            name: Linux
+          - os: macos-13
+            name: macOS-Intel
             sep: ':'
+      #    - os: ubuntu-22.04
+      #      name: Linux
+      #      sep: ':'
       #    - os: windows-latest
       #      name: Windows
       #      sep: ';'
@@ -104,8 +104,11 @@ jobs:
       - name: Package
         run: |
           cd dist
+          if [ "${} runner.os }}" == "macOS" ]; then
+            zip -r ../Molektra-${{ matrix.name }}.zip main.app
+          else
             zip -r ../Molektra-${{ matrix.name }}.zip main
-
+          fi
       - uses: actions/upload-artifact@v4
         with:
           name: Molektra-${{ matrix.name }}
