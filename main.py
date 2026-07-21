@@ -7,6 +7,7 @@ import sys
 from PyQt5.QtGui import QSurfaceFormat
 from PyQt5.QtWidgets import QApplication
 from gui.main_window import MainWindow
+from PyQt5.QtOpenGL import QGLFormat
 
 def main():
     fmt = QSurfaceFormat()
@@ -16,6 +17,14 @@ def main():
     fmt.setDepthBufferSize(24)
     fmt.setStencilBufferSize(8)
     QSurfaceFormat.setDefaultFormat(fmt)
+    glfmt = QGLFormat()
+    glfmt.setDoubleBuffer(True)
+    glfmt.setDepthBufferSize(24)
+    glfmt.setStencil(True)
+    glfmt.setStencilBufferSize(8)
+    glfmt.setVersion(2,1)
+    glfmt.setProfile(QGLFormat.NoProfile)
+    QGLFormat.setDefaultFormat(glfmt)
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
