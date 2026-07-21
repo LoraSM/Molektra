@@ -44,6 +44,7 @@ jobs:
           pip install "setuptools<60" wheel
           pip install numpy==1.26.4
           pip install \
+            PyQt5==5.15.11 \
             pyqtgraph==0.12.4 \
             PyOpenGL==3.1.10 \
             matplotlib==3.7.0 \
