@@ -15,7 +15,7 @@ jobs:
           - os: windows-latest
             name: Windows
             sep: ':'
-            icon : '--icon=gui/icono.ico'
+            icon : '--icon=gui/molektra.ico'
 
     runs-on: ${{ matrix.os }}
     defaults:
