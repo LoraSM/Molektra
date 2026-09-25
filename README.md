@@ -1,9 +1,10 @@
-<p align="left">
-  <img src="gui/molektra_banner.png" width="550" alt="Molektra">
+<h1><i>Molektra: A Graphical User Interface for Continuous Shape and Symmetry Measures</i></h1>
+
+
+<p align="center">
+  <img src="gui/molektra_banner.png" width="650" alt="Molektra">
 </p>
 
-### *A Graphical User Interface for Continuous Shape and Symmetry Measures*
-
-<br clear="all" />
-
 ---
+<h2>About</h2>
+
