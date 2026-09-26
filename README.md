@@ -41,3 +41,7 @@ python main.py
 <p align="left">
   <img src="gui/banner_3.png" width="350" alt="Quick Start">
 </p>
+
+Using `Molektra` is straightforward. Here is the basic workflow to analyze a molecule:
+1. **Launch the app** go to `Load File > Open` to load your molecular structure (e.g., `.xyz`, `.pdb` or `.cif`), or you can simply drop the file into the visualization screen.
+2. **Select your atoms** by clicking on the central atom first, followed by the coordinating ligands. Alternatively, click the central atom and press **Cmd + E** (macOs) or **Ctrl+E** (Windows) to automatically select all neighboring atoms.
