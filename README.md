@@ -25,18 +25,31 @@ Since `Molektra` is provided as a standalone executable, **no Python environment
 *(Note: Depending on your system settings, Windows SmartScreen or macOS Gatekeeper might prompt a security warning. You can safely bypass this by clicking "More info > Run anyway" on Windows, or by right-clicking the app and selecting "Open" on macOS).*
 
 ### Option 2: Run from Source code
-If you prefer to inspect the code or run `Molektra` directly via Python, you can clone the repository and install the required dependencies manually. 
+If you prefer to inspect the code or run `Molektra` directly via Python, you can clone the repository and install the required dependencies manually. <br>
+*Note: Building `symgroup` and `WFNSYM` from source requires a Fortran compiler (`gfortran`) and `PyQt5` to be available in your environment. If you'd rather not install these manually see the [Conda setup script](setup_env.sh) below.*
+
+
 ```bash
 #Clone the repository
-git clone [https://github.com/LoraSM/Molektra.git](https://github.com/LoraSM/Molektra.git)
+git clone https://github.com/LoraSM/Molektra.git
 cd Molektra
 
 #Install dependencies
 pip install -r requirements_molektra.txt
+pip install cosymlib --no-deps
 
 #Launch the application
-python main.py
+python gui/main.py
 ```
+### Option 2B: Automated Conda Setup
+Alternatively, run the provided script to create a ready-to-use Conda environment with all dependencies (including `gfortran` and `PyQt5`):
+
+```bash
+./setup_env.sh
+conda activate molektra_env
+python gui/main.py
+```
+
 
 <p align="left">
   <img src="gui/banner_3.png" width="350" alt="Quick Start">
