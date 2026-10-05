@@ -39,7 +39,7 @@ pip install -r requirements_molektra.txt
 pip install cosymlib --no-deps
 
 #Launch the application
-python gui/main.py
+python molektra.py
 ```
 ### Option 2B: Automated Conda Setup
 Alternatively, run the provided script to create a ready-to-use Conda environment with all dependencies (including `gfortran` and `PyQt5`):
@@ -47,7 +47,7 @@ Alternatively, run the provided script to create a ready-to-use Conda environmen
 ```bash
 ./setup_env.sh
 conda activate molektra_env
-python gui/main.py
+python molektra.py
 ```
 
 
