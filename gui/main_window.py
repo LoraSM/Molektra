@@ -77,7 +77,7 @@ class SelectionOverlay(QWidget):
 
 #SYMMETRY/SHAPE
 def calculate_symmetry_posym(coords, symbols, groups=None):
-    Configuration().scan_steps = 10
+    Configuration().scan_steps = 40
     print("N átomos:", len(symbols))
     print("Símbolos:", symbols)
     if groups is None:
