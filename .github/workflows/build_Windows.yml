@@ -1,27 +1,27 @@
 name: Build Molektra - Windows
 
 on:
-  workflow_dispatch:        
+  workflow_dispatch:
   push:
     tags:
-      - 'v*'            
+      - 'v*'
 
 jobs:
   build:
     strategy:
-      fail-fast: false     
+      fail-fast: false
       matrix:
         include:
           - os: windows-latest
             name: Windows
             sep: ':'
-            icon : '--icon=gui/molektra.ico'
+            icon: '--icon=gui/molektra.ico'
 
     runs-on: ${{ matrix.os }}
     defaults:
       run:
         shell: bash -el {0}
-        
+
     steps:
       - uses: actions/checkout@v4
 
@@ -79,16 +79,15 @@ jobs:
           pip install --no-build-isolation "$TMPDIR/WFNSYM-master/python"
 
       - name: Install cosymlib
-        run: | 
-          pip install pointgroup==0.4.1 
+        run: |
+          pip install pointgroup==0.4.1
           pip install --no-build-isolation huckelpy==0.2.3
           pip install cosymlib==0.11.1 --no-deps
-
 
       - name: Build with PyInstaller
         run: |
           pyinstaller --onedir --windowed \
-            ${{ matrix.icon}} \
+            ${{ matrix.icon }} \
             --paths=. \
             --collect-submodules gui \
             --collect-submodules molecule \
@@ -97,16 +96,16 @@ jobs:
             --collect-submodules cosymlib --collect-data cosymlib \
             --collect-submodules posym --collect-data posym \
             --collect-submodules OpenGL \
+            --hidden-import PyQt5.QtOpenGL \
             --add-data "gui${{ matrix.sep }}gui" \
             molektra.py
 
       - name: Package
         run: |
           cd dist
-            7z a ../Molektra-${{ matrix.name }}.zip main
-            
+          7z a ../Molektra-${{ matrix.name }}.zip molektra
+
       - uses: actions/upload-artifact@v4
         with:
           name: Molektra-${{ matrix.name }}
           path: Molektra-${{ matrix.name }}.zip
-
