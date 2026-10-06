@@ -82,7 +82,10 @@ jobs:
         run: |
           pip install pointgroup==0.4.1
           pip install --no-build-isolation huckelpy==0.2.3
-          pip install cosymlib==0.11.1 --no-deps
+          TMPDIR=$(mktemp -d)
+          curl -L https://github.com/GrupEstructuraElectronicaSimetria/cosymlib/archive/refs/heads/master.zip -o "$TMPDIR/cosymlib.zip"
+          unzip -q "$TMPDIR/cosymlib.zip" -d "$TMPDIR"
+          pip install --no-build-isolation --no-deps "$TMPDIR/cosymlib-master"
 
       - name: Build with PyInstaller
         run: |
