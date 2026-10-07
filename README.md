@@ -16,11 +16,11 @@ Below, you will find instructions on how to download the pre-compiled executable
 
 ### Option 1: Standalone Executables (Recommended)
 Since `Molektra` is provided as a standalone executable, **no Python environment or additional libraries are required**.
-  1. Go to XXX (../../XXX) page on the right side of this repository. <br> <br>
+  1. Go to Releases page on the right side of this repository. <br> <br>
   2. Download the version corresponding to your operating system:
-     - **Windows:** Download `Molektra_Windows.exe`
-     - **macOS (Apple Silicon/ M-series):** Download `Molektra_macOS_arm.app`(for M1, M2, M3, M4 chips)
-     - **macOS (Intel):** Download `Molektra_macOs_intel.app` (for Intel-based Macs) <br> <br>
+     - **Windows:** Download `Molektra-v1.0.0-Windows.rar`
+     - **macOS (Apple Silicon/ M-series):** Download `Molektra-v1.0.0-macOS-AppleSilicon.zip` (for M1, M2, M3, M4 chips)
+     - **macOS (Intel):** Download `Molektra-v1.0.0-macOS-Intel.zip` (for Intel-based Macs) <br> <br>
   3. Double-click the downloaded file to launch the application. <br>
 *(Note: Depending on your system settings, Windows SmartScreen or macOS Gatekeeper might prompt a security warning. You can safely bypass this by clicking "More info > Run anyway" on Windows, or by right-clicking the app and selecting "Open" on macOS).*
 
