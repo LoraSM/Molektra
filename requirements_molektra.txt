@@ -20,4 +20,4 @@ pointgroup
 huckelpy
 
 #--Cosymlib install separately with --no-deps
-# pip isntall cosymlib --no-deps
+# pip install cosymlib --no-deps
