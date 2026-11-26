@@ -64,7 +64,7 @@ Using `Molektra` is straightforward. Here is the basic workflow to analyze a mol
 
 ### Full User Manual 
 For a detailed, step-by-step explanation of all features and advanced visualization settings, please refer to the complete manual:
-**[Read the Molektra User Manual](docs/Molektra_Manual-1.1.pdf)**
+**[Read the Molektra User Manual](docs/Molektra-Manual-1.1.pdf)**
 <br><br>
 
 <p align="left">
