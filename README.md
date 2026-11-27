@@ -73,6 +73,9 @@ For a detailed, step-by-step explanation of all features and advanced visualizat
 
 ### How to cite
 If you use `Molektra` in your research, please cite our work: 
+<br><br>
+<a href="https://doi.org/10.5281/zenodo.23106229"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.23106229.svg" alt="DOI"></a>
+
 
 ### Bug reports & Feedback
 Found a bug or have a feature request? Please feel free to open an issue!
